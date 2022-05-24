@@ -3,10 +3,10 @@ const { WrappedEvents } = require("../type/wrappedEvents");
 const { isSudoOk, getSudoInnerCallEvents } = require("./utils/sudo");
 const { getBatchInnerCallEvents } = require("./utils/batch");
 const { findInterrupted } = require("./utils/checkInterrupted");
-const { getMultisigInnerCallEvents } = require("./utils/multisig");
+const { isMultisigExecutedOk, getMultisigInnerCallEvents } = require("./utils/multisig");
 const { logger } = require("../logger");
 const { findRegistry } = require("../chain/specs");
-const { isMultisigExecutedOk, calcMultisigAddress } = require("../utils/multisig");
+const { calcMultisigAddress } = require("../utils/multisig");
 const { getProxyInnerCallEvents } = require("./utils/getProxyCallEvents");
 const { isProxyExecutedOk } = require("./utils/isProxyExecutedOk");
 const {
