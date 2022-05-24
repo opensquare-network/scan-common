@@ -18,6 +18,15 @@ async function getApi() {
     console.log(`Connected to endpoint:`, getEndPoint());
   }
 
+  api.on("error", (err) => {
+    console.error("api error, will restart:", err);
+    process.exit(0);
+  });
+  api.on("disconnected", () => {
+    console.error("api disconnected, will restart.");
+    process.exit(0);
+  });
+
   return api;
 }
 
