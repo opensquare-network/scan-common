@@ -219,6 +219,24 @@ const BalancesEvents = Object.freeze({
   Transfer: "Transfer",
 });
 
+const StakingEvents = Object.freeze({
+  EraPayout: "EraPayout",
+  Slash: "Slash",
+  Slashed: "Slashed",
+  Reward: "Reward",
+  EraPaid: "EraPaid",
+});
+
+const IdentityEvents = Object.freeze({
+  IdentityKilled: "IdentityKilled",
+});
+
+const ElectionsPhragmenEvents = Object.freeze({
+  CandidateSlashed: "CandidateSlashed",
+  SeatHolderSlashed: "SeatHolderSlashed",
+  NewTerm: "NewTerm",
+});
+
 const KsmTreasuryAccount = "F3opxRbN5ZbjJNU511Kj2TLuzFcDq9BGduA9TgiECafpg29";
 const DotTreasuryAccount = "13UVJyLnbVp9RBZYFwFGyDvVd1y27Tt8tkntv6Q7JVPhFsTB";
 
@@ -257,5 +275,8 @@ module.exports = {
   ChildBountiesEvents,
   ChildBountiesMethods,
   ChildBountyState,
+  StakingEvents,
+  IdentityEvents,
+  ElectionsPhragmenEvents,
   ...require("./chains"),
 };
