@@ -100,6 +100,10 @@ const TimelineItemTypes = Object.freeze({
   event: "event",
 });
 
+const CollectiveMethods = Object.freeze({
+  propose: "propose",
+});
+
 const CouncilEvents = Object.freeze({
   Proposed: "Proposed",
   Voted: "Voted",
@@ -278,5 +282,6 @@ module.exports = {
   StakingEvents,
   IdentityEvents,
   ElectionsPhragmenEvents,
+  CollectiveMethods,
   ...require("./chains"),
 };
