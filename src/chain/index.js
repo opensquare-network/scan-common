@@ -5,5 +5,6 @@ module.exports = {
   ...require("./fetchBlocks"),
   ...require("./utils/extractBlockTime"),
   ...require("./utils/getBlockIndexer"),
+  ...require("./utils/get-block-hash"),
   ...require("./latestHead"),
 }
