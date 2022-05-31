@@ -221,6 +221,8 @@ const PreImageEvents = Object.freeze({
 
 const BalancesEvents = Object.freeze({
   Transfer: "Transfer",
+  Reserved: "Reserved",
+  Withdraw: "Withdraw",
 });
 
 const StakingEvents = Object.freeze({
