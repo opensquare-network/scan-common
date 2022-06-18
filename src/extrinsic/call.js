@@ -111,7 +111,7 @@ async function handleWrappedCall(call, signer, extrinsicIndexer, wrappedEvents) 
   }
 
   if (_callHandler) {
-    _callHandler(...arguments);
+    await _callHandler(...arguments);
   }
 }
 
