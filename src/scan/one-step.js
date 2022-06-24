@@ -45,7 +45,7 @@ async function oneStepScan(startHeight, handleBlock = emptyFn) {
   }
 
   const lastHeight = last(blocks || []).height;
-  logger.debug(`${ lastHeight } scan finished!`);
+  logger.info(`${ lastHeight } scan finished!`);
   return lastHeight + 1;
 }
 
