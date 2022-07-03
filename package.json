@@ -5,8 +5,12 @@
   "repository": "git@github.com:opensquare-network/scan-common.git",
   "author": "Yongfeng LI <yongfeng@opensquare.network>",
   "license": "CC-BY-NC-ND-4.0",
+  "scripts": {
+    "test": "jest src"
+  },
   "dependencies": {
     "@polkadot/api": "^8.9.1",
+    "@polkadot/api-derive": "^8.9.1",
     "@polkadot/types": "^8.9.1",
     "@polkadot/util": "^9.6.1",
     "@polkadot/util-crypto": "^9.6.1",
