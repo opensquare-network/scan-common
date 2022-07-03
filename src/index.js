@@ -8,6 +8,7 @@ module.exports = {
   ...require("./extrinsic/call/find"),
   ...call,
   ...require("./logger"),
+  ...require("./extrinsic/callInExtrinsic"),
   chain,
   utils,
   env,
