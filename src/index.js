@@ -2,11 +2,11 @@ const chain = require("./chain");
 const utils = require("./utils");
 const env = require("./env");
 const scan = require("./scan");
-const call = require("./extrinsic/call");
+const call = require("./extrinsic/call/index");
 
 module.exports = {
   ...require("./extrinsic/call/find"),
-  ...require("./extrinsic/call"),
+  ...call,
   ...require("./logger"),
   chain,
   utils,

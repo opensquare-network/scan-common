@@ -1,4 +1,7 @@
+const { normalizeCall } = require("./normalize");
+const { findTargetCall } = require("./find");
+
 module.exports = {
-  ...require("./find"),
-  ...require("./normalize"),
+  normalizeCall,
+  findTargetCall,
 }
