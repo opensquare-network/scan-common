@@ -1,6 +1,6 @@
 const { CHAINS } = require("../consts/chains");
 const scanStep = parseInt(process.env.SCAN_STEP) || 100;
-const useKnownHeights = !!process.env.USE_KNOWN_HEIGHTS;
+const useKnownHeights = parseInt(process.env.USE_KNOWN_HEIGHTS) === 1;
 const useMetaDb = parseInt(process.env.USE_META) === 1;
 
 let chain = null;
