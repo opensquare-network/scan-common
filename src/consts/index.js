@@ -10,7 +10,7 @@ const Modules = Object.freeze({
   Identity: "identity",
   Democracy: "democracy",
   ElectionsPhragmen: "electionsPhragmen",
-  PhragmenElection: "PhragmenElection",
+  PhragmenElection: "phragmenElection",
   Session: "session",
   Balances: "balances",
   Sudo: "sudo",
