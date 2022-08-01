@@ -16,6 +16,9 @@ const Modules = Object.freeze({
   Sudo: "sudo",
   TechnicalCommittee: "technicalCommittee",
   ChildBounties: "childBounties",
+  Timestamp: "timestamp",
+  ParachainSystem: "parachainSystem",
+  ParaInherent: "paraInherent",
 });
 
 const ChildBountiesEvents = Object.freeze({
