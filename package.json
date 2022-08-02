@@ -1,6 +1,6 @@
 {
   "name": "@osn/scan-common",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "main": "src/index.js",
   "repository": "git@github.com:opensquare-network/scan-common.git",
   "author": "Yongfeng LI <yongfeng@opensquare.network>",
