@@ -10,7 +10,7 @@ async function handleEvents(events = [], extrinsics = [], blockIndexer, handleEv
     }
 
     let extrinsic, extrinsicIndex;
-    if (!phase.isNull) {
+    if (!phase.None) {
       extrinsicIndex = phase.value.toNumber();
       indexer = { ...indexer, extrinsicIndex };
       extrinsic = extrinsics[extrinsicIndex];
