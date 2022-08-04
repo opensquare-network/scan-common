@@ -202,6 +202,8 @@ const ReferendumEvents = Object.freeze({
   NotPassed: "NotPassed",
   Cancelled: "Cancelled",
   Executed: "Executed",
+  PreimageMissing: "PreimageMissing",
+  PreimageInvalid: "PreimageInvalid",
 });
 
 const DemocracyExternalEvents = Object.freeze({
