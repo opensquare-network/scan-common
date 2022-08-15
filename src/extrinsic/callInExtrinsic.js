@@ -1,3 +1,4 @@
+const { findBlockApi } = require("../chain");
 const { emptyFn } = require("../utils/emptyFn");
 const { WrappedEvents } = require("../type/wrappedEvents");
 const { isSudoOk, getSudoInnerCallEvents } = require("./utils/sudo");
@@ -36,6 +37,7 @@ async function handleMultisig(call, signer, extrinsicIndexer, wrappedEvents) {
     return
   }
 
+  const blockApi = await findBlockApi(extrinsicIndexer.blockHash);
   const registry = await findRegistry(extrinsicIndexer);
   const callHex = call.args[3];
   const threshold = call.args[0].toNumber();
@@ -43,7 +45,7 @@ async function handleMultisig(call, signer, extrinsicIndexer, wrappedEvents) {
   const multisigAddr = calcMultisigAddress(
     [signer, ...otherSignatories],
     threshold,
-    registry.chainSS58
+    blockApi.registry.chainSS58
   );
 
   let innerCall;
