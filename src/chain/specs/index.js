@@ -1,4 +1,6 @@
 const findLast = require("lodash.findlast");
+const { findBlockApi } = require("../blockApi");
+const { isUseMetaDb } = require("../../env");
 const { getAllVersionChangeHeights, getScanHeight } = require("../../mongo/meta");
 const { getApi, getProvider } = require("../api");
 const { logger } = require("../../logger");
@@ -37,6 +39,11 @@ function getSpecHeights() {
 }
 
 async function findRegistry({ blockHash, blockHeight: height }) {
+  if (!isUseMetaDb()) {
+    const blockApi = await findBlockApi(blockHash);
+    return blockApi.registry;
+  }
+
   let u8aHash = blockHash;
   if (isHex(blockHash)) {
     u8aHash = hexToU8a(u8aHash);

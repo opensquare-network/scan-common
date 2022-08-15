@@ -6,7 +6,6 @@ const { getBatchInnerCallEvents } = require("./utils/batch");
 const { findInterrupted } = require("./utils/checkInterrupted");
 const { isMultisigExecutedOk, getMultisigInnerCallEvents } = require("./utils/multisig");
 const { logger } = require("../logger");
-const { findRegistry } = require("../chain/specs");
 const { calcMultisigAddress } = require("../utils/multisig");
 const { getProxyInnerCallEvents } = require("./utils/getProxyCallEvents");
 const { isProxyExecutedOk } = require("./utils/isProxyExecutedOk");
@@ -38,7 +37,6 @@ async function handleMultisig(call, signer, extrinsicIndexer, wrappedEvents) {
   }
 
   const blockApi = await findBlockApi(extrinsicIndexer.blockHash);
-  const registry = await findRegistry(extrinsicIndexer);
   const callHex = call.args[3];
   const threshold = call.args[0].toNumber();
   const otherSignatories = call.args[1].toJSON();
@@ -50,7 +48,7 @@ async function handleMultisig(call, signer, extrinsicIndexer, wrappedEvents) {
 
   let innerCall;
   try {
-    innerCall = new GenericCall(registry, callHex);
+    innerCall = new GenericCall(blockApi.registry, callHex);
   } catch (e) {
     logger.error(`error when parse multiSig`, extrinsicIndexer);
     return;
