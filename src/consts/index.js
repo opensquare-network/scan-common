@@ -246,6 +246,7 @@ const ElectionsPhragmenEvents = Object.freeze({
   CandidateSlashed: "CandidateSlashed",
   SeatHolderSlashed: "SeatHolderSlashed",
   NewTerm: "NewTerm",
+  Renounced: "Renounced",
 });
 
 const KsmTreasuryAccount = "F3opxRbN5ZbjJNU511Kj2TLuzFcDq9BGduA9TgiECafpg29";
