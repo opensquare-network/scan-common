@@ -1,6 +1,6 @@
 class WrappedEvents {
   #isCallEvents = false; // `true` means the events of one call
-  #offset = 0;
+  #offset = 0; // offset in all extrinsic events
   #events = [];
 
   constructor(events = [], offset, isCallEvents) {
