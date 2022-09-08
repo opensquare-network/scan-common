@@ -37,10 +37,21 @@ function isUseMetaDb() {
   return useMetaDb;
 }
 
+function getEnvOrThrow(envName) {
+  const value = process.env[envName];
+  if (!value) {
+    throw new Error(`Environment variable ${ envName } not set`);
+  }
+
+  return value
+}
+
+
 module.exports = {
   currentChain,
   getScanStep,
   setChain,
   firstScanKnowHeights,
   isUseMetaDb,
+  getEnvOrThrow,
 };

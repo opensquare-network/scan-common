@@ -1,28 +1,15 @@
 const { getCollection } = require("./common");
 const { MongoClient } = require("mongodb");
 
-function getDbName() {
-  const dbName = process.env.MONGO_DB_SCAN_NAME;
-  if (!dbName) {
-    throw new Error("MONGO_ACCOUNT_DB_NAME not set");
-  }
-
-  return dbName;
-}
-
-const mongoUrl = process.env.MONGO_SCAN_URL || "mongodb://127.0.0.1:27017";
-
 let client = null;
 let db = null;
-
 let statusCol = null;
 
-async function initScanDb() {
+async function initScanDb(mongoUrl, dbName) {
   client = await MongoClient.connect(mongoUrl, {
     useUnifiedTopology: true,
   });
 
-  const dbName = getDbName();
   console.log(`Use scan DB name:`, dbName);
 
   db = client.db(dbName);
@@ -31,14 +18,14 @@ async function initScanDb() {
   return db;
 }
 
-async function tryInit(col) {
+function checkInit(col) {
   if (!col) {
-    await initScanDb();
+    throw new Error(`Database is not initialized`)
   }
 }
 
 async function getScanStatusCollection() {
-  await tryInit(statusCol);
+  await checkInit(statusCol);
   return statusCol;
 }
 
@@ -70,7 +57,7 @@ async function updateScanHeight(height) {
 
 module.exports = {
   initScanDb,
-  tryInit,
+  checkInit,
   getScanStatusCollection,
   getNextScanHeight,
   updateScanHeight,
