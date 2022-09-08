@@ -57,6 +57,11 @@ class ScanDb {
       { upsert: true }
     );
   }
+
+  async close() {
+    this.#checkInit();
+    await this.#client.close();
+  }
 }
 
 module.exports = {
