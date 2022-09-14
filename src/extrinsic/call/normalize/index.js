@@ -24,8 +24,16 @@ function normalizeArgValue(argMeta, name, value) {
     return value.toBigInt().toString()
   }
 
+  if ("AccountIndex" === type) {
+    return value.toNumber();
+  }
+
   if (value.toBigInt) {
-    return value.toBigInt().toString();
+    try {
+      return value.toBigInt().toString();
+    } catch (e) {
+      // ignore this
+    }
   }
 
   if (value.isSome) {

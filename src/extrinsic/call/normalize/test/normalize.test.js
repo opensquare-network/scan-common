@@ -163,4 +163,22 @@ describe("Normalize call", () => {
       ]
     });
   })
+
+  test("indices#claim works", async () => {
+    const block = await getBlockByHeight(32412);
+    const extrinsic = block.block.extrinsics[2];
+    const normalized = normalizeCall(extrinsic.method);
+    expect(normalized).toEqual({
+      "callIndex": "0x0400",
+      "section": "indices",
+      "method": "claim",
+      "args": [
+        {
+          "name": "index",
+          "type": "",
+          "value": 233
+        }
+      ]
+    });
+  })
 })
