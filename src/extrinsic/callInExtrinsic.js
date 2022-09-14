@@ -84,8 +84,11 @@ async function unwrapSudo(call, signer, extrinsicIndexer, wrappedEvents) {
     return
   }
 
+  const isSudoAs = SudoMethods.sudoAs === method;
+  const targetCall = isSudoAs ? call.args[1] : call.args[0];
+  const author = isSudoAs ? call.args[0].toString() : signer;
   const innerCallEvents = getSudoInnerCallEvents(wrappedEvents, method);
-  await handleWrappedCall(call.args[0], signer, extrinsicIndexer, innerCallEvents);
+  await handleWrappedCall(targetCall, author, extrinsicIndexer, innerCallEvents);
 }
 
 async function handleWrappedCall(call, signer, extrinsicIndexer, wrappedEvents) {
