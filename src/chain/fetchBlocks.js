@@ -42,10 +42,10 @@ async function fetchBlocksFromDb(heights = [], doFetchAuthor = false) {
   for (const blockInDb of blocksInDb) {
     let block
     try {
-      block = await constructBlockFromDbData(blockInDb, doFetchAuthor = false);
+      block = await constructBlockFromDbData(blockInDb, doFetchAuthor);
     } catch (e) {
       logger.error(`can not construct block from db data at ${ blockInDb.height }`, e?.message);
-      block = await fetchOneBlockFromNode(blockInDb.height, doFetchAuthor = false);
+      block = await fetchOneBlockFromNode(blockInDb.height, doFetchAuthor);
     }
 
     blocks.push(block)
