@@ -8,7 +8,11 @@ function normalizeArgValue(argMeta, name, value) {
   const typeName = argMeta.typeName.toString();
 
   if ("WrapperKeepOpaque<Call>" === type) {
-    return normalizeCall(value.unwrap());
+    try {
+      return normalizeCall(value.unwrap());
+    } catch (e) {
+      return value.toHex();
+    }
   }
 
   if ("LookupSource" === typeName) {
