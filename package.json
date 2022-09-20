@@ -9,11 +9,11 @@
     "test": "jest src"
   },
   "dependencies": {
-    "@polkadot/api": "9.3.3",
-    "@polkadot/api-derive": "9.3.3",
-    "@polkadot/types": "9.3.3",
-    "@polkadot/util": "10.1.7",
-    "@polkadot/util-crypto": "10.1.7",
+    "@polkadot/api": "9.4.1",
+    "@polkadot/api-derive": "9.4.1",
+    "@polkadot/types": "9.4.1",
+    "@polkadot/util": "10.1.8",
+    "@polkadot/util-crypto": "10.1.8",
     "bignumber.js": "^9.0.2",
     "lodash.findlast": "^4.6.0",
     "lodash.last": "^3.0.0",
