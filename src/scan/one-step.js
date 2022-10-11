@@ -9,18 +9,22 @@ const { getLatestHeight } = require("../chain/latestHead");
 const last = require("lodash.last");
 const { logger } = require("../logger");
 
-async function oneStepScan(startHeight, handleBlock = emptyFn, needBlockAuthor = false) {
+async function oneStepScan(startHeight, handleBlock = emptyFn, needBlockAuthor = false, capHeight = null) {
   const chainHeight = getLatestHeight();
+  let maxHeight = chainHeight;
+  if (capHeight && capHeight < chainHeight) {
+    maxHeight = capHeight;
+  }
 
-  if (startHeight > chainHeight) {
+  if (startHeight > maxHeight) {
     // Just wait if the to scan height greater than current chain height
     await sleep(3000);
     return startHeight;
   }
 
-  let targetHeight = chainHeight;
+  let targetHeight = maxHeight;
   const step = getScanStep();
-  if (startHeight + step < chainHeight) {
+  if (startHeight + step < maxHeight) {
     targetHeight = startHeight + step;
   }
 
