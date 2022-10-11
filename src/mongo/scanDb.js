@@ -50,6 +50,15 @@ class ScanDb {
     }
   }
 
+  async getScanHeight() {
+    const heightInfo = await this.#statusCol.findOne({ name: mainScanName });
+    if (heightInfo) {
+      return parseInt(heightInfo.value);
+    }
+
+    return 0;
+  }
+
   async updateScanHeight(height) {
     await this.#statusCol.updateOne(
       { name: mainScanName },
