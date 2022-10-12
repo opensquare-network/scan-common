@@ -10,9 +10,9 @@ function isRpcNoResponse(err) {
 }
 
 function wrapBlockHandler(handleBlockFn = emptyFn) {
-  return (wrappedBlock) => {
+  return async (wrappedBlock) => {
     try {
-      handleBlockFn(wrappedBlock)
+      await handleBlockFn(wrappedBlock)
     } catch (e) {
       logger.error(`${wrappedBlock.height} scan error`, e);
       if (isRpcNoResponse(e)) {
