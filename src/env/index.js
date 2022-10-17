@@ -1,4 +1,3 @@
-const { CHAINS } = require("../consts/chains");
 const scanStep = parseInt(process.env.SCAN_STEP) || 100;
 const useKnownHeights = parseInt(process.env.USE_KNOWN_HEIGHTS) === 1;
 const useMetaDb = parseInt(process.env.USE_META) === 1;
@@ -14,15 +13,12 @@ function currentChain() {
     return chain;
   }
 
-  if ([
-    CHAINS.POLKADOT,
-    CHAINS.KUSAMA,
-  ].includes(process.env.CHAIN)) {
-    setChain(process.env.CHAIN);
-    return process.env.CHAIN;
+  if (!process.env.CHAIN) {
+    throw new Error(`process.env.CHAIN not set`);
   }
 
-  throw new Error(`Unknown chain ${ process.env.CHAIN }`);
+  setChain(process.env.CHAIN);
+  return chain;
 }
 
 function getScanStep() {
