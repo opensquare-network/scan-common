@@ -1,4 +1,6 @@
 const { ApiPromise, WsProvider } = require("@polkadot/api");
+const knownOptions = require("@osn/provider-options");
+const { currentChain } = require("../env");
 
 let provider = null;
 let api = null;
@@ -13,8 +15,9 @@ function getEndPoint() {
 
 async function getApi() {
   if (!api) {
+    const options = knownOptions[currentChain()] || {},
     provider = new WsProvider(getEndPoint(), 1000);
-    api = await ApiPromise.create({ provider });
+    api = await ApiPromise.create({ provider, ...options });
     console.log(`Connected to endpoint:`, getEndPoint());
   }
 
