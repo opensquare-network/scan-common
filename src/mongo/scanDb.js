@@ -37,6 +37,10 @@ class ScanDb {
     return await getCollection(this.#db, colName);
   }
 
+  async getStatusCol() {
+    return this.#statusCol;
+  }
+
   async getNextScanHeight() {
     const heightInfo = await this.#statusCol.findOne({ name: mainScanName });
 
