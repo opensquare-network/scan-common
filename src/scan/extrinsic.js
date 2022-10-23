@@ -1,4 +1,4 @@
-const { handleCallsInExtrinsic } = require("../extrinsic/call");
+const { handleCallsInExtrinsic } = require("../extrinsic/callInExtrinsic");
 const { emptyFn } = require("../utils/emptyFn");
 const { extractExtrinsicEvents, isExtrinsicSuccess } = require("../utils");
 
