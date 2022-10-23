@@ -15,7 +15,7 @@ function getEndPoint() {
 
 async function getApi() {
   if (!api) {
-    const options = knownOptions[currentChain()] || {},
+    const options = knownOptions[currentChain()] || {};
     provider = new WsProvider(getEndPoint(), 1000);
     api = await ApiPromise.create({ provider, ...options });
     console.log(`Connected to endpoint:`, getEndPoint());
