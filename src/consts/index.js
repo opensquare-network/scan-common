@@ -19,6 +19,7 @@ const Modules = Object.freeze({
   Timestamp: "timestamp",
   ParachainSystem: "parachainSystem",
   ParaInherent: "paraInherent",
+  Referenda: "Referenda",
 });
 
 const ChildBountiesEvents = Object.freeze({
@@ -292,4 +293,5 @@ module.exports = {
   ElectionsPhragmenEvents,
   CollectiveMethods,
   ...require("./chains"),
+  ...require("./referenda"),
 };
