@@ -19,7 +19,7 @@ const Modules = Object.freeze({
   Timestamp: "timestamp",
   ParachainSystem: "parachainSystem",
   ParaInherent: "paraInherent",
-  Referenda: "Referenda",
+  Referenda: "referenda",
 });
 
 const ChildBountiesEvents = Object.freeze({
