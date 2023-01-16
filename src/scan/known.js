@@ -18,11 +18,11 @@ async function scanKnownHeights(toScanHeight, updateHeightFn = emptyFn, handleBl
         await sleep(0);
         logger.error(`Error with block scan ${ block.height }`, e);
       }
+
+      logger.info(`${ block.height } scan finished! - known height scan`)
     }
 
     const lastHeight = last(blocks || [])?.height
-    logger.info(`${ lastHeight } scan finished! - known height scan`)
-
     count++
     if (count % 10 === 0) {
       console.log(`${ lastHeight } restart process in case of memory leak`);
