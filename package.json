@@ -1,6 +1,6 @@
 {
   "name": "@osn/scan-common",
-  "version": "0.4.10",
+  "version": "0.4.11",
   "main": "src/index.js",
   "repository": "git@github.com:opensquare-network/scan-common.git",
   "author": "Yongfeng LI <yongfeng@opensquare.network>",
@@ -9,10 +9,10 @@
     "test": "jest src"
   },
   "dependencies": {
-    "@osn/provider-options": "1.1.1",
-    "@polkadot/api": "10.7.1",
-    "@polkadot/api-derive": "10.7.1",
-    "@polkadot/types": "10.7.1",
+    "@osn/provider-options": "1.1.2",
+    "@polkadot/api": "10.7.2",
+    "@polkadot/api-derive": "10.7.2",
+    "@polkadot/types": "10.7.2",
     "@polkadot/util": "12.2.1",
     "@polkadot/util-crypto": "12.2.1",
     "bignumber.js": "^9.0.2",
