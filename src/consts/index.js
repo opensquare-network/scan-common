@@ -91,6 +91,7 @@ const MultisigEvents = Object.freeze({
 const UtilityMethods = Object.freeze({
   batch: "batch",
   batchAll: "batchAll",
+  forceBatch: "forceBatch",
 });
 
 const UtilityEvents = Object.freeze({
