@@ -15,6 +15,18 @@ async function fetchBlocks(heights = [], doFetchAuthor = false) {
   }
 }
 
+async function fetchBlocksInLimitedSeconds(heights = [], doFetchAuthor = false, limitedSeconds = 0) {
+  if (limitedSeconds <= 0) {
+    return await fetchBlocks(heights, doFetchAuthor);
+  }
+
+  const fetchPromise = fetchBlocks(heights, doFetchAuthor);
+  const timePromise = new Promise((resolve, reject) => {
+    setTimeout(() => reject(new Error("Fetch blocks request timeout")), 1000 * limitedSeconds);
+  });
+  return Promise.race([fetchPromise, timePromise]);
+}
+
 async function constructBlockFromDbData(blockInDb, doFetchAuthor = false) {
   const registry = await findRegistry({
     blockHash: blockInDb.blockHash,
@@ -101,4 +113,5 @@ async function fetchOneBlockFromNode(height, doFetchAuthor = false) {
 module.exports = {
   fetchBlocks,
   fetchOneBlockFromNode,
+  fetchBlocksInLimitedSeconds,
 }

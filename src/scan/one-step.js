@@ -1,7 +1,5 @@
 const { emptyFn } = require("../utils/emptyFn");
-const { fetchBlocks } = require("../chain/fetchBlocks");
-const { updateSpecs } = require("../chain/specs");
-const { getMetaScanHeight } = require("../chain/specs");
+const { fetchBlocksInLimitedSeconds, updateSpecs, getMetaScanHeight } = require("../chain");
 const { isUseMetaDb } = require("../env");
 const { getScanStep } = require("../env");
 const { sleep } = require("../utils/sleep");
@@ -38,7 +36,16 @@ async function oneStepScan(startHeight, handleBlock = emptyFn, needBlockAuthor =
   for (let i = startHeight; i <= targetHeight; i++) {
     heights.push(i);
   }
-  const blocks = await fetchBlocks(heights, needBlockAuthor);
+  let blocks;
+  try {
+    // Blocks have to be fetched in 2 seconds, or exit
+    blocks = await fetchBlocksInLimitedSeconds(heights, needBlockAuthor, 2);
+  } catch (e) {
+    const start = heights[0];
+    const end = heights[heights.length - 1];
+    logger.error(`Blocks from ${ start } to ${ end } fetch error, exit`, e);
+    process.exit(1);
+  }
   if ((blocks || []).length <= 0) {
     await sleep(1000);
     return startHeight;
