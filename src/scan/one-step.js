@@ -38,8 +38,8 @@ async function oneStepScan(startHeight, handleBlock = emptyFn, needBlockAuthor =
   }
   let blocks;
   try {
-    // Blocks have to be fetched in 2 seconds, or exit
-    blocks = await fetchBlocksInLimitedSeconds(heights, needBlockAuthor, 10);
+    // Blocks have to be fetched in 30 seconds, or exit
+    blocks = await fetchBlocksInLimitedSeconds(heights, needBlockAuthor, 30);
   } catch (e) {
     const start = heights[0];
     const end = heights[heights.length - 1];
