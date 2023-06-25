@@ -71,7 +71,8 @@ async function getNextKnownHeights(beginHeight) {
     height: { $gte: beginHeight },
   }).sort({ height: 1 }).limit(step).toArray();
 
-  return (records || []).map(item => item.height);
+  const heights = (records || []).map(item => item.height);
+  return [...new Set(heights)].sort((a, b) => a - b);
 }
 
 async function closeKnownClient() {
