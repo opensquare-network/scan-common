@@ -19,6 +19,7 @@ const {
 const { GenericCall } = require("@polkadot/types");
 
 let _callHandler;
+let _callIndex;
 
 async function unwrapProxy(call, signer, extrinsicIndexer, wrappedEvents) {
   if (!isProxyExecutedOk(wrappedEvents?.events)) {
@@ -115,7 +116,12 @@ async function handleWrappedCall(call, signer, extrinsicIndexer, wrappedEvents) 
   }
 
   if (_callHandler) {
+    extrinsicIndexer = {
+      callIndex: _callIndex,
+      ...extrinsicIndexer
+    }
     await _callHandler(...arguments);
+    _callIndex += 1;
   }
 }
 
@@ -125,6 +131,7 @@ async function handleCallsInExtrinsic(extrinsic, events, extrinsicIndexer, callH
   const call = extrinsic.method;
 
   _callHandler = callHandler;
+  _callIndex = 0;
   await handleWrappedCall(call, signer, extrinsicIndexer, wrappedEvents);
 }
 
