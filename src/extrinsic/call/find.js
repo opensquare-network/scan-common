@@ -38,7 +38,7 @@ function findTargetCall(call, checkFn = emptyFn) {
 
   if (Modules.Proxy === section && ProxyMethods.proxy === method) {
     return findTargetCallFromProxy(...arguments);
-  } else if (Modules.Multisig === section && MultisigMethods.asMulti === method) {
+  } else if ([Modules.Multisig, Modules.Utility].includes(section) && MultisigMethods.asMulti === method) {
     return findTargetCallFromMultisig(...arguments);
   } else if (Modules.Utility === section &&
     [UtilityMethods.batch, UtilityMethods.batchAll, UtilityMethods.forceBatch].includes(method)) {

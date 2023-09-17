@@ -21,7 +21,7 @@ function getMultisigInnerCallEvents(wrappedEvents) {
 
 function isMultisigExecutedOk(events = []) {
   const event = events.find(({ event }) =>
-    event.section === Modules.Multisig && MultisigEvents.MultisigExecuted === event.method
+    [Modules.Multisig, Modules.Utility].includes(event.section) && MultisigEvents.MultisigExecuted === event.method
   );
 
   if (!event) {

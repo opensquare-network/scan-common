@@ -97,7 +97,7 @@ async function handleWrappedCall(call, signer, extrinsicIndexer, wrappedEvents) 
   if (Modules.Proxy === section && ProxyMethods.proxy === method) {
     await unwrapProxy(...arguments);
   } else if (
-    Modules.Multisig === section &&
+    [Modules.Multisig, Modules.Utility].includes(section) &&
     MultisigMethods.asMulti === method
   ) {
     await handleMultisig(...arguments);
