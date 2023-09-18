@@ -28,7 +28,12 @@ function isMultisigExecutedOk(events = []) {
     return false
   }
 
-  return event.event?.data[4].isOk;
+  if (event.event?.data.length <= 4) {
+    // For kusama spec 1055, `MultisigExecuted` event has no callHash argument
+    return event.event?.data[3].isOk;
+  } else {
+    return event.event?.data[4].isOk;
+  }
 }
 
 module.exports = {
