@@ -19,7 +19,7 @@ async function setSpecHeights(heights = []) {
   for (const height of heights) {
     const blockHash = await api.rpc.chain.getBlockHash(height);
     const provider = getProvider()
-    const runtimeVersion = await provider.send('chain_getRuntimeVersion', [blockHash]);
+    const runtimeVersion = await provider.send('state_getRuntimeVersion', [blockHash]);
     versionChangedHeights.push({
       height,
       runtimeVersion,
