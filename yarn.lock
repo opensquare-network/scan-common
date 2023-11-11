@@ -691,10 +691,10 @@
     "@opencensus/core" "^0.0.8"
     uuid "^3.2.1"
 
-"@osn/provider-options@1.1.4":
-  version "1.1.4"
-  resolved "https://registry.npmjs.org/@osn/provider-options/-/provider-options-1.1.4.tgz#cf0d409553a9f228fae382a41f7c22f5d737b0cd"
-  integrity sha512-gETJ1EhlgUFrSNT/x5p7oPfoMT6HxzDtqADjKfS3vjsgugk3mTJeXC9dV/mqegYQsfv+X4eAIjFwnJc4vYB5rA==
+"@osn/provider-options@1.1.6":
+  version "1.1.6"
+  resolved "https://registry.npmjs.org/@osn/provider-options/-/provider-options-1.1.6.tgz#166328f09ed019cdb1bfece3f731633de8b79832"
+  integrity sha512-6sdEmFcrkPUwuNpc2Hgid5C9vsE4PDtXjaKBLzdhhvEBvF/0ukmCggL2A2MHIHuN5i37tb8D5+Db+R45y0CDig==
 
 "@pm2/agent@~2.0.0":
   version "2.0.1"
