@@ -20,9 +20,7 @@ const mongoUrl = process.env.MONGO_DB_KNOWN_HEIGHTS_URL || "mongodb://127.0.0.1:
 let heightCol = null;
 
 async function initDb() {
-  client = await MongoClient.connect(mongoUrl, {
-    useUnifiedTopology: true,
-  });
+  client = await MongoClient.connect(mongoUrl);
 
   db = client.db(getDbName());
   heightCol = db.collection(heightCollectionName);

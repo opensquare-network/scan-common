@@ -13,9 +13,7 @@ class ScanDb {
   #statusCol;
 
   constructor(mongoUrl, dbName) {
-    this.#clientInitPromise = MongoClient.connect(mongoUrl, {
-      useUnifiedTopology: true,
-    });
+    this.#clientInitPromise = MongoClient.connect(mongoUrl);
 
     this.#dbName = dbName;
   }

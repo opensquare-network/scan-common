@@ -24,9 +24,7 @@ let blockCol = null;
 let versionCol = null;
 
 async function initDb() {
-  client = await MongoClient.connect(mongoUrl, {
-    useUnifiedTopology: true,
-  });
+  client = await MongoClient.connect(mongoUrl);
 
   db = client.db(getDbName());
   statusCol = db.collection(statusCollectionName);
