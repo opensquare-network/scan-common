@@ -4,6 +4,7 @@ const env = require("./env");
 const scan = require("./scan");
 const call = require("./extrinsic/call/index");
 const mongo = require("./mongo");
+const extrinsic = require("./extrinsic");
 
 module.exports = {
   ...require("./extrinsic/call/find"),
@@ -18,4 +19,5 @@ module.exports = {
   scan,
   call,
   mongo,
+  extrinsic,
 }
