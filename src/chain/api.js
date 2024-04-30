@@ -5,20 +5,26 @@ const { currentChain } = require("../env");
 let provider = null;
 let api = null;
 
-function getEndPoint() {
-  if (!process.env.WS_ENDPOINT) {
+function getEndPoints() {
+  const wsEndpoint = process.env.WS_ENDPOINT;
+  if (!wsEndpoint) {
     throw new Error("WS_ENDPOINT not set");
   }
 
-  return process.env.WS_ENDPOINT
+  if ((wsEndpoint || "").includes(";")) {
+    return wsEndpoint.split(";");
+  } else {
+    return wsEndpoint;
+  }
 }
 
 async function getApi() {
   if (!api) {
     const options = knownOptions[currentChain()] || {};
-    provider = new WsProvider(getEndPoint(), 1000);
+    const endpoints = getEndPoints();
+    provider = new WsProvider(endpoints, 1000);
     api = await ApiPromise.create({ provider, ...options });
-    console.log(`Connected to endpoint:`, getEndPoint());
+    console.log(`Connected to endpoint:`, process.env.WS_ENDPOINT);
   }
 
   if (process.env.NODE_ENV !== 'test') {
