@@ -19,6 +19,12 @@ async function unwrapProxy(call, signer, extrinsicIndexer) {
   await handleWrappedCall(innerCall, real, extrinsicIndexer);
 }
 
+async function unwrapProxyAnnounced(call, signer, extrinsicIndexer) {
+  const real = call.args[1].toString();
+  const innerCall = call.args[3];
+  await handleWrappedCall(innerCall, real, extrinsicIndexer);
+}
+
 async function handleMultisig(call, signer, extrinsicIndexer) {
   const blockApi = await findBlockApi(extrinsicIndexer.blockHash);
   const callHex = call.args[3];
@@ -61,6 +67,8 @@ async function handleWrappedCall(call, signer, extrinsicIndexer) {
   const { section, method } = call;
   if (Modules.Proxy === section && ProxyMethods.proxy === method) {
     await unwrapProxy(...arguments);
+  } else if (Modules.Proxy === section && "proxyAnnounced" === method) {
+    await unwrapProxyAnnounced(...arguments);
   } else if (
     [Modules.Multisig, Modules.Utility].includes(section) &&
     MultisigMethods.asMulti === method
