@@ -1,9 +1,8 @@
 const { getBlockIndexer } = require("../../chain");
 const { handleCallsInExtrinsic } = require("../callInExtrinsic");
 const { extractExtrinsicEvents } = require("../../utils");
-const {  getApi } = require("../../chain");
 const { setKusama } = require("../../test/ksm");
-const { disconnect } = require("../../chain/api");
+const { disconnect, getApi } = require("../../chain/api");
 jest.setTimeout(3000000);
 
 describe("Handling of", () => {
@@ -29,14 +28,21 @@ describe("Handling of", () => {
     const extrinsicIndexer = {
       ...blockIndexer,
       extrinsicIndex: 2,
-    }
+    };
 
     let callIndex = 0;
-    await handleCallsInExtrinsic(extrinsic, events, extrinsicIndexer, async (call, author, extrinsicIndexer, wrappedEvents) => {
-      if (callIndex === 0) {
-        expect(author).toEqual("JKoSyjg9nvVZterFB5XssM7eaYj4Ty6LhCLRGUfy6NKGNC3");
+    await handleCallsInExtrinsic(
+      extrinsic,
+      events,
+      extrinsicIndexer,
+      async (call, author, extrinsicIndexer, wrappedEvents) => {
+        if (callIndex === 0) {
+          expect(author).toEqual(
+            "JKoSyjg9nvVZterFB5XssM7eaYj4Ty6LhCLRGUfy6NKGNC3"
+          );
+        }
+        callIndex++;
       }
-      callIndex++
-    })
-  })
-})
+    );
+  });
+});
