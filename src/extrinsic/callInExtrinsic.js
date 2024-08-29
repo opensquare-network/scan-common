@@ -22,6 +22,7 @@ const {
 const { GenericCall } = require("@polkadot/types");
 
 async function unwrapProxy(
+  blockApi,
   call,
   signer,
   extrinsicIndexer,
@@ -36,6 +37,7 @@ async function unwrapProxy(
   const real = call.args[0].toString();
   const innerCall = call.args[2];
   await handleWrappedCall(
+    blockApi,
     innerCall,
     real,
     extrinsicIndexer,
@@ -45,6 +47,7 @@ async function unwrapProxy(
 }
 
 async function handleMultisig(
+  blockApi,
   call,
   signer,
   extrinsicIndexer,
@@ -55,7 +58,6 @@ async function handleMultisig(
     return;
   }
 
-  const blockApi = await findBlockApi(extrinsicIndexer.blockHash);
   const callHex = call.args[3];
   const threshold = call.args[0].toNumber();
   const otherSignatories = call.args[1].toJSON();
@@ -75,6 +77,7 @@ async function handleMultisig(
 
   const innerCallEvents = getMultisigInnerCallEvents(wrappedEvents);
   await handleWrappedCall(
+    blockApi,
     innerCall,
     multisigAddr,
     extrinsicIndexer,
@@ -84,6 +87,7 @@ async function handleMultisig(
 }
 
 async function unwrapBatch(
+  blockApi,
   call,
   signer,
   extrinsicIndexer,
@@ -106,6 +110,7 @@ async function unwrapBatch(
   for (let index = 0; index < endIndex; index++) {
     const innerCallEvents = getBatchInnerCallEvents(wrappedEvents, index);
     await handleWrappedCall(
+      blockApi,
       innerCalls[index],
       signer,
       extrinsicIndexer,
@@ -116,6 +121,7 @@ async function unwrapBatch(
 }
 
 async function unwrapSudo(
+  blockApi,
   call,
   signer,
   extrinsicIndexer,
@@ -132,6 +138,7 @@ async function unwrapSudo(
   const author = isSudoAs ? call.args[0].toString() : signer;
   const innerCallEvents = getSudoInnerCallEvents(wrappedEvents, method);
   await handleWrappedCall(
+    blockApi,
     targetCall,
     author,
     extrinsicIndexer,
@@ -141,6 +148,7 @@ async function unwrapSudo(
 }
 
 async function handleWrappedCall(
+  blockApi,
   call,
   signer,
   extrinsicIndexer,
@@ -173,11 +181,12 @@ async function handleWrappedCall(
   }
 
   if (callHandler) {
-    await callHandler(...arguments);
+    await callHandler(call, signer, extrinsicIndexer, wrappedEvents);
   }
 }
 
-async function handleCallsInExtrinsic(
+async function handleCallsInExtrinsicWithApi(
+  blockApi,
   extrinsic,
   events,
   extrinsicIndexer,
@@ -188,6 +197,7 @@ async function handleCallsInExtrinsic(
   const call = extrinsic.method;
 
   await handleWrappedCall(
+    blockApi,
     call,
     signer,
     extrinsicIndexer,
@@ -196,6 +206,23 @@ async function handleCallsInExtrinsic(
   );
 }
 
+async function handleCallsInExtrinsic(
+  extrinsic,
+  events,
+  extrinsicIndexer,
+  callHandler = emptyFn
+) {
+  const blockApi = await findBlockApi(extrinsicIndexer.blockHash);
+  return await handleCallsInExtrinsicWithApi(
+    blockApi,
+    extrinsic,
+    events,
+    extrinsicIndexer,
+    callHandler
+  );
+}
+
 module.exports = {
   handleCallsInExtrinsic,
+  handleCallsInExtrinsicWithApi,
 };
