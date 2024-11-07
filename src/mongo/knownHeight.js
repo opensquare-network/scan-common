@@ -77,7 +77,16 @@ async function closeKnownClient() {
   await client.close()
 }
 
+async function getKnownHeightDb() {
+  if (!db) {
+    await initDb();
+  }
+
+  return db;
+}
+
 module.exports = {
+  getKnownHeightDb,
   getKnownHeightCollection: getHeightCollection,
   closeKnownClient,
   saveKnownHeights,
