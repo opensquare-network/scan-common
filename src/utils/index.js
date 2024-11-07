@@ -27,8 +27,8 @@ function bigAdd(v1, v2) {
 
 function bigAdds(values = []) {
   return values.reduce((result, v) => {
-    return bigAdd(result, v)
-  }, '0')
+    return bigAdd(result, v);
+  }, "0");
 }
 
 function gt(v1, v2) {
@@ -46,4 +46,5 @@ module.exports = {
   gt,
   ...require("./emptyFn"),
   ...require("./multisig"),
-}
+  ...require("./hash"),
+};
