@@ -1,5 +1,5 @@
 const { ApiPromise, WsProvider } = require("@polkadot/api");
-const knownOptions = require("@osn/provider-options");
+const { options: allOptions } = require("./options");
 const { currentChain } = require("../env");
 
 let provider = null;
@@ -20,7 +20,7 @@ function getEndPoints() {
 
 async function getApi() {
   if (!api) {
-    const options = knownOptions[currentChain()] || {};
+    const options = allOptions[currentChain()] || {};
     const endpoints = getEndPoints();
     provider = new WsProvider(endpoints, 1000);
     api = await ApiPromise.create({ provider, ...options });
