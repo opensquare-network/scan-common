@@ -18,6 +18,12 @@ function findTargetCallFromMultisig(multisigCall, checkFn) {
   return findTargetCall(innerCall, checkFn);
 }
 
+function findTargetCallFromAsMultiThreshold1(multisigCall, checkFn) {
+  const callHex = multisigCall.args[1];
+  const innerCall = new GenericCall(multisigCall.registry, callHex);
+  return findTargetCall(innerCall, checkFn);
+}
+
 function findTargetCallFromBatch(batchCall, checkFn) {
   for (const innerCall of batchCall.args[0]) {
     const call = findTargetCall(innerCall, checkFn);
@@ -40,6 +46,8 @@ function findTargetCall(call, checkFn = emptyFn) {
     return findTargetCallFromProxy(...arguments);
   } else if ([Modules.Multisig, Modules.Utility].includes(section) && MultisigMethods.asMulti === method) {
     return findTargetCallFromMultisig(...arguments);
+  } else if ([Modules.Multisig, Modules.Utility].includes(section) && "asMultiThreshold1" === method) {
+    return findTargetCallFromAsMultiThreshold1(...arguments);
   } else if (Modules.Utility === section &&
     [UtilityMethods.batch, UtilityMethods.batchAll, UtilityMethods.forceBatch].includes(method)) {
     return findTargetCallFromBatch(...arguments);

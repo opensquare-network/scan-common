@@ -47,6 +47,29 @@ async function handleMultisig(call, signer, extrinsicIndexer) {
   await handleWrappedCall(innerCall, multisigAddr, extrinsicIndexer);
 }
 
+async function handleMultisigAsMultiThreshold1(call, signer, extrinsicIndexer) {
+  const blockApi = await findBlockApi(extrinsicIndexer.blockHash);
+  const callHex = call.args[1];
+  const threshold = 1;
+  const otherSignatories = call.args[0].toJSON();
+
+  const multisigAddr = calcMultisigAddress(
+    [signer, ...otherSignatories],
+    threshold,
+    blockApi.registry.chainSS58
+  );
+
+  let innerCall;
+  try {
+    innerCall = new GenericCall(blockApi.registry, callHex);
+  } catch (e) {
+    logger.error(`error when parse multiSig`, extrinsicIndexer);
+    return;
+  }
+
+  await handleWrappedCall(innerCall, multisigAddr, extrinsicIndexer);
+}
+
 async function unwrapBatch(call, signer, extrinsicIndexer) {
   const innerCalls = call.args[0];
   for (let index = 0; index < innerCalls.length; index++) {
@@ -74,6 +97,11 @@ async function handleWrappedCall(call, signer, extrinsicIndexer) {
     MultisigMethods.asMulti === method
   ) {
     await handleMultisig(...arguments);
+  } else if (
+    [Modules.Multisig, Modules.Utility].includes(section) &&
+    "asMultiThreshold1" === method
+  ) {
+    await handleMultisigAsMultiThreshold1(...arguments);
   } else if (Modules.Utility === section && [
     UtilityMethods.batch,
     UtilityMethods.batchAll,
