@@ -35,6 +35,11 @@ function findTargetCallFromBatch(batchCall, checkFn) {
   return null;
 }
 
+function findTargetCallFromAsDerivative(call, checkFn) {
+  const innerCall = call.args[1];
+  return findTargetCall(innerCall, checkFn);
+}
+
 function findTargetCall(call, checkFn = emptyFn) {
   if (checkFn(call)) {
     return call
@@ -51,6 +56,8 @@ function findTargetCall(call, checkFn = emptyFn) {
   } else if (Modules.Utility === section &&
     [UtilityMethods.batch, UtilityMethods.batchAll, UtilityMethods.forceBatch].includes(method)) {
     return findTargetCallFromBatch(...arguments);
+  } else if (Modules.Utility === section && UtilityMethods.asDerivative === method) {
+    return findTargetCallFromAsDerivative(...arguments);
   }
 
   return null;

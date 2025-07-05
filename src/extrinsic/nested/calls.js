@@ -10,6 +10,7 @@ const { findBlockApi } = require("../../chain");
 const { calcMultisigAddress } = require("../../utils/multisig");
 const { GenericCall } = require("@polkadot/types");
 const { logger } = require("../../logger");
+const { encodeDerivedAddress } = require("@polkadot/util-crypto");
 
 let _callHandler;
 
@@ -86,6 +87,14 @@ async function unwrapSudo(call, signer, extrinsicIndexer) {
   await handleWrappedCall(targetCall, author, extrinsicIndexer);
 }
 
+async function unwrapAsDerivative(call, signer, extrinsicIndexer) {
+  const index = call.args[0].toNumber();
+  const blockApi = await findBlockApi(extrinsicIndexer.blockHash);
+  const derivedAddr = encodeDerivedAddress(signer, index, blockApi.registry.chainSS58);
+  const innerCall = call.args[1];
+  await handleWrappedCall(innerCall, derivedAddr, extrinsicIndexer);
+}
+
 async function handleWrappedCall(call, signer, extrinsicIndexer) {
   const { section, method } = call;
   if (Modules.Proxy === section && ProxyMethods.proxy === method) {
@@ -108,6 +117,8 @@ async function handleWrappedCall(call, signer, extrinsicIndexer) {
     UtilityMethods.forceBatch,
   ].includes(method)) {
     await unwrapBatch(...arguments);
+  } else if (Modules.Utility === section && UtilityMethods.asDerivative === method) {
+    await unwrapAsDerivative(...arguments);
   } else if (Modules.Sudo === section && [
     SudoMethods.sudo,
     SudoMethods.sudoAs,
