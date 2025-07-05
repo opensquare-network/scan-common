@@ -74,6 +74,7 @@ const TipMethods = Object.freeze({
 
 const ProxyMethods = Object.freeze({
   proxy: "proxy",
+  proxyAnnounced: "proxyAnnounced",
 });
 
 const ProxyEvents = Object.freeze({
@@ -82,6 +83,7 @@ const ProxyEvents = Object.freeze({
 
 const MultisigMethods = Object.freeze({
   asMulti: "asMulti",
+  asMultiThreshold1: "asMultiThreshold1",
 });
 
 const MultisigEvents = Object.freeze({
@@ -92,6 +94,7 @@ const UtilityMethods = Object.freeze({
   batch: "batch",
   batchAll: "batchAll",
   forceBatch: "forceBatch",
+  asDerivative: "asDerivative",
 });
 
 const UtilityEvents = Object.freeze({
