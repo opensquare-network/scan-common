@@ -27,7 +27,7 @@ const ChildBountiesEvents = Object.freeze({
   Awarded: "Awarded",
   Claimed: "Claimed",
   Canceled: "Canceled",
-})
+});
 
 const ChildBountiesMethods = Object.freeze({
   proposeCurator: "proposeCurator",
@@ -184,7 +184,7 @@ const ChildBountyState = Object.freeze({
   Rejected: "Rejected",
   Canceled: "Canceled",
   Claimed: "Claimed",
-})
+});
 
 const TreasuryCommonEvent = Object.freeze({
   Burnt: "Burnt",
@@ -254,6 +254,10 @@ const ElectionsPhragmenEvents = Object.freeze({
   Renounced: "Renounced",
 });
 
+const SessionEvents = Object.freeze({
+  NewSession: "NewSession",
+});
+
 const KsmTreasuryAccount = "F3opxRbN5ZbjJNU511Kj2TLuzFcDq9BGduA9TgiECafpg29";
 const DotTreasuryAccount = "13UVJyLnbVp9RBZYFwFGyDvVd1y27Tt8tkntv6Q7JVPhFsTB";
 
@@ -296,6 +300,7 @@ module.exports = {
   IdentityEvents,
   ElectionsPhragmenEvents,
   CollectiveMethods,
+  SessionEvents,
   ...require("./chains"),
   ...require("./referenda"),
 };
