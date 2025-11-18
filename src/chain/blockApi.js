@@ -9,7 +9,9 @@ const { getApi } = require("./api");
 // Default: 100 entries
 // Lower values = less memory usage, more API recreations
 // Higher values = more memory usage, fewer API recreations
-const MAX_CACHE_SIZE = parseInt(process.env.BLOCK_API_CACHE_SIZE || '100');
+// Setting BLOCK_API_CACHE_SIZE=0 effectively disables the cache (no entries cached)
+// Negative values are treated as 0 (cache disabled)
+const MAX_CACHE_SIZE = Math.max(0, parseInt(process.env.BLOCK_API_CACHE_SIZE || '100'));
 
 // Use Map to maintain insertion order for LRU eviction
 let blockApiMap = new Map();
@@ -31,15 +33,10 @@ function setBlockApi(blockHash, api) {
     }
     
     if (lruHash) {
-      // Clean up the evicted block API
-      const evictedApi = blockApiMap.get(lruHash);
-      if (evictedApi && typeof evictedApi.disconnect === 'function') {
-        try {
-          evictedApi.disconnect();
-        } catch (err) {
-          // Ignore disconnect errors during cleanup
-        }
-      }
+      // Remove the evicted block API from cache
+      // Note: We don't call disconnect() because blockApi instances share
+      // the same underlying RPC provider/connection managed by the main api instance.
+      // Removing the reference allows garbage collection to clean up the object.
       blockApiMap.delete(lruHash);
       accessOrder.delete(lruHash);
     }
@@ -68,16 +65,10 @@ async function findBlockApi(blockHash) {
 
 // Export function to clear cache (useful for testing or manual cleanup)
 function clearBlockApiCache() {
-  // Disconnect all cached APIs
-  for (const [hash, cachedApi] of blockApiMap.entries()) {
-    if (cachedApi && typeof cachedApi.disconnect === 'function') {
-      try {
-        cachedApi.disconnect();
-      } catch (err) {
-        // Ignore disconnect errors
-      }
-    }
-  }
+  // Clear all cached block API references
+  // Note: We don't call disconnect() because blockApi instances share
+  // the same underlying RPC provider/connection managed by the main api instance.
+  // Clearing references allows garbage collection to clean up the objects.
   blockApiMap.clear();
   accessOrder.clear();
   accessCounter = 0;
@@ -88,7 +79,9 @@ function getBlockApiCacheStats() {
   return {
     size: blockApiMap.size,
     maxSize: MAX_CACHE_SIZE,
-    usagePercent: ((blockApiMap.size / MAX_CACHE_SIZE) * 100).toFixed(1)
+    usagePercent: MAX_CACHE_SIZE > 0 
+      ? ((blockApiMap.size / MAX_CACHE_SIZE) * 100).toFixed(1)
+      : '0.0'
   };
 }
 
