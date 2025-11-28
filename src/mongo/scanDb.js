@@ -26,7 +26,7 @@ class ScanDb {
 
   #checkInit() {
     if (!this.#db) {
-      throw new Error(`Database is not initialized`)
+      throw new Error(`Database is not initialized`);
     }
   }
 
@@ -73,8 +73,13 @@ class ScanDb {
     this.#checkInit();
     await this.#client.close();
   }
+
+  getRawDb() {
+    this.#checkInit();
+    return this.#db;
+  }
 }
 
 module.exports = {
   ScanDb,
-}
+};
