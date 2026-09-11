@@ -127,7 +127,54 @@ function decodeExtrinsic(registry, value) {
   }
 }
 
+/**
+ * The origin account of an extrinsic, as an address.
+ *
+ * polkadot.js throws when the `signer` of a general transaction is read: those carry no
+ * top-level signature, their origin is established by the transaction extensions instead.
+ * Take the account from the extension holding the signature, e.g. Polkadot AssetHub's
+ * `VerifyMultiSignature::Signed { signature, account }`.
+ *
+ * Returns undefined when the origin can not be told from the extensions.
+ */
+function getExtrinsicSigner(extrinsic) {
+  if (!extrinsic) {
+    return undefined;
+  }
+
+  if (typeof extrinsic.isGeneral !== "function" || !extrinsic.isGeneral()) {
+    return extrinsic.signer.toString();
+  }
+
+  const inner = extrinsic.inner;
+  const keys = inner && inner.defKeys;
+  if (!keys) {
+    return undefined;
+  }
+
+  for (const key of keys) {
+    if (key === "method" || key === "transactionExtensionVersion") {
+      continue;
+    }
+
+    let value;
+    try {
+      value = inner.get(key);
+    } catch (e) {
+      continue;
+    }
+
+    const signed = value && value.isSigned ? value.asSigned : undefined;
+    if (signed && signed.account) {
+      return signed.account.toString();
+    }
+  }
+
+  return undefined;
+}
+
 module.exports = {
   decodeExtrinsic,
   extensionOrderForVersion,
+  getExtrinsicSigner,
 };

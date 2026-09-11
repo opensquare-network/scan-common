@@ -6,7 +6,7 @@ const {
   SudoMethods,
 } = require("../../consts");
 const { emptyFn } = require("../../utils/emptyFn");
-const { findBlockApi } = require("../../chain");
+const { findBlockApi, getExtrinsicSigner } = require("../../chain");
 const { calcMultisigAddress } = require("../../utils/multisig");
 const { GenericCall } = require("@polkadot/types");
 const { logger } = require("../../logger");
@@ -132,7 +132,14 @@ async function handleWrappedCall(call, signer, extrinsicIndexer) {
 }
 
 async function handlePureNestedCalls(extrinsic, extrinsicIndexer, callHandler = emptyFn) {
-  const signer = extrinsic.signer.toString();
+  const signer = getExtrinsicSigner(extrinsic);
+  if (!signer) {
+    logger.warn(
+      `Can not get the signer of extrinsic, skip its nested calls`,
+      extrinsicIndexer,
+    );
+    return;
+  }
   const call = extrinsic.method;
 
   _callHandler = callHandler;

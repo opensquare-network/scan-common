@@ -1,4 +1,4 @@
-const { findBlockApi } = require("../chain");
+const { findBlockApi, getExtrinsicSigner } = require("../chain");
 const { emptyFn } = require("../utils/emptyFn");
 const { WrappedEvents } = require("../type/wrappedEvents");
 const { isSudoOk, getSudoInnerCallEvents } = require("./utils/sudo");
@@ -364,7 +364,14 @@ async function handleCallsInExtrinsicWithApi(
   callHandler = emptyFn
 ) {
   const wrappedEvents = new WrappedEvents(events, 0, false);
-  const signer = extrinsic.signer.toString();
+  const signer = getExtrinsicSigner(extrinsic);
+  if (!signer) {
+    logger.warn(
+      `Can not get the signer of extrinsic, skip the calls in it`,
+      extrinsicIndexer,
+    );
+    return;
+  }
   const call = extrinsic.method;
 
   await handleCallsInExtrinsicCore(
