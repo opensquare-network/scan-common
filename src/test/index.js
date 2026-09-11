@@ -3,4 +3,5 @@ module.exports = {
   ...require("./common"),
   ...require("./ksm"),
   ...require("./khala"),
+  ...require("./assetHub"),
 }

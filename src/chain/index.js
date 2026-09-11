@@ -3,6 +3,7 @@ module.exports = {
   ...require("./api"),
   ...require("./blockApi"),
   ...require("./fetchBlocks"),
+  ...require("./decodeExtrinsic"),
   ...require("./utils/extractBlockTime"),
   ...require("./utils/getBlockIndexer"),
   ...require("./utils/get-block-hash"),
