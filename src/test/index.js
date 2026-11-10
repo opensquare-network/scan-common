@@ -4,4 +4,5 @@ module.exports = {
   ...require("./ksm"),
   ...require("./khala"),
   ...require("./assetHub"),
+  ...require("./peoplePolkadot"),
 }

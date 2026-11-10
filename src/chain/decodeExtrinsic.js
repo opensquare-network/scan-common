@@ -27,6 +27,26 @@ const MISSING_EXTENSION_TYPES = {
     extrinsic: { asDotnsGateway: "Option<IndivPalletDotnsGatewayExtensionAsDotnsGatewayInfo>" },
     payload: {},
   },
+  AsPerson: {
+    extrinsic: { asPerson: "Option<IndivPalletPeopleExtensionAsPersonInfo>" },
+    payload: {},
+  },
+  PeopleLiteAuth: {
+    extrinsic: { peopleLiteAuth: "Option<IndivPalletPeopleLiteExtensionPeopleLiteAuthData>" },
+    payload: {},
+  },
+  AsMember: {
+    extrinsic: { asMember: "Option<IndivPalletMembersExtensionAsMemberInfo>" },
+    payload: {},
+  },
+  AsCoinage: {
+    extrinsic: { asCoinage: "Option<IndivPalletCoinageExtensionAsCoinageInfo>" },
+    payload: {},
+  },
+  AsResources: {
+    extrinsic: { asResources: "Option<IndivPalletResourcesExtensionAsResourcesInfo>" },
+    payload: {},
+  },
   RestrictOrigins: { extrinsic: { restrictOrigins: "bool" }, payload: {} },
 };
 
